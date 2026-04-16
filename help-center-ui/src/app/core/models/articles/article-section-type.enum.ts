@@ -8,4 +8,5 @@ export enum ArticleSectionType {
   BulletedList = 'bulleted_list',
   HeadingNumberedList = 'heading_numbered_list',
   NumberedList = 'numbered_list',
+  quote = 'quote',
 }

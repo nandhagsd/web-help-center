@@ -41,6 +41,14 @@ export const GETTING_STARTED_ARTICLES: HelpArticle[] = [
           'Use the restaurant profile screen to manage identity, reservation settings, and guest-facing business information.',
       },
       {
+        id: 'profile-testimonial',
+        type: ArticleSectionType.quote,
+        quote:
+          'Smart Dining took the pressure off reservations and waitlists, letting our team focus on what matters most — the guest experience.',
+        author: 'Gerard Boyle',
+        designation: 'Owner · DC Oakes Brewhouse & Eatery',
+      },
+      {
         id: 'profile-checklist',
         type: ArticleSectionType.BulletedList,
         items: [
@@ -212,5 +220,5 @@ export const GETTING_STARTED_ARTICLES: HelpArticle[] = [
           'Accurate floor mapping helps your team reduce manual adjustments, speed up seating, and keep guest flow smoother throughout the shift.',
       },
     ],
-  }
+  },
 ];

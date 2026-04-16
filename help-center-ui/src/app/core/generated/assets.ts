@@ -7,6 +7,7 @@ export const Assets = {
     alertCircleOutlineSvg: 'assets/icons/alert-circle-outline.svg',
     arrowRightSvg: 'assets/icons/arrow-right.svg',
     cogOutlineSvg: 'assets/icons/cog-outline.svg',
+    formatQuoteCloseOutlineSvg: 'assets/icons/format-quote-close-outline.svg',
     lifebuoySvg: 'assets/icons/lifebuoy.svg',
     linkSvg: 'assets/icons/link.svg',
     openInNewSvg: 'assets/icons/open-in-new.svg',

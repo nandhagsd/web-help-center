@@ -105,7 +105,8 @@
           </header>
 
           <article class="">
-            <div class="text-base leading-8 text-neutral-700 [&_a]:text-primary-700 [&_a]:underline [&_a]:underline-offset-2">
+            <div
+              class="text-base leading-8 text-neutral-700 [&_a]:text-primary-700 [&_a]:underline [&_a]:underline-offset-2">
               @for (section of article.sections; track section.id) {
                 @switch (section.type) {
                   @case (ArticleSectionType.HeadingParagraph) {
@@ -114,29 +115,28 @@
                       <div [innerHTML]="section.paragraph | markdownHtml"></div>
                     </section>
                   }
-
                   @case (ArticleSectionType.Paragraph) {
                     <section class="mb-6" [innerHTML]="section.paragraph | markdownHtml"></section>
                   }
-
                   @case (ArticleSectionType.Divider) {
                     <section class="my-8 border-t border-neutral-200">
                     </section>
                   }
-
                   @case (ArticleSectionType.Image) {
                     <figure class="mb-8 overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50">
-                      <img [src]="section.imageUrl" [alt]="section.imageAlt" class="max-h-105 w-full object-contain" loading="lazy" />
+                      <img [src]="section.imageUrl" [alt]="section.imageAlt" class="max-h-105 w-full object-contain"
+                           loading="lazy"/>
                       @if (section.caption) {
-                        <figcaption class="px-4 py-3 text-sm text-neutral-600" [innerHTML]="section.caption | markdownHtml"></figcaption>
+                        <figcaption class="px-4 py-3 text-sm text-neutral-600"
+                                    [innerHTML]="section.caption | markdownHtml"></figcaption>
                       }
                     </figure>
                   }
-
                   @case (ArticleSectionType.VideoEmbed) {
                     <section class="mb-8">
                       @if (section.heading) {
-                        <h3 class="mb-3 text-xl font-semibold leading-[1.35] text-neutral-900">{{ section.heading }}</h3>
+                        <h3
+                          class="mb-3 text-xl font-semibold leading-[1.35] text-neutral-900">{{ section.heading }}</h3>
                       }
                       <div class="overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50">
                         <iframe
@@ -151,7 +151,6 @@
                       </div>
                     </section>
                   }
-
                   @case (ArticleSectionType.HeadingBulletedList) {
                     <section class="mb-8">
                       <h3 class="mb-3 text-xl font-semibold leading-[1.35] text-neutral-900">{{ section.heading }}</h3>
@@ -162,7 +161,6 @@
                       </ul>
                     </section>
                   }
-
                   @case (ArticleSectionType.BulletedList) {
                     <section class="mb-8">
                       <ul class="list-disc space-y-2 pl-5">
@@ -172,7 +170,6 @@
                       </ul>
                     </section>
                   }
-
                   @case (ArticleSectionType.HeadingNumberedList) {
                     <section class="mb-8">
                       <h3 class="mb-3 text-xl font-semibold leading-[1.35] text-neutral-900">{{ section.heading }}</h3>
@@ -183,7 +180,6 @@
                       </ol>
                     </section>
                   }
-
                   @case (ArticleSectionType.NumberedList) {
                     <section class="mb-8">
                       <ol class="list-decimal space-y-2 pl-5">
@@ -191,6 +187,43 @@
                           <li [innerHTML]="item | markdownHtml"></li>
                         }
                       </ol>
+                    </section>
+                  }
+                  @case (ArticleSectionType.quote) {
+                    <section class="mb-8">
+                      <blockquote class="rounded-4xl bg-neutral-100 px-5 py-4">
+
+
+                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                             class="size-16 text-neutral-300"
+                             id="mdi-format-quote-close-outline" viewBox="0 0 24 24">
+                          <path
+                            d="M13 6V14H14.88L12.88 18H18.62L21 13.24V6M15 8H19V12.76L17.38 16H16.12L18.12 12H15M3 6V14H4.88L2.88 18H8.62L11 13.24V6M5 8H9V12.76L7.38 16H6.12L8.12 12H5Z"/>
+                        </svg>
+
+                        <p
+                          class="text-lg leading-relaxed text-neutral-900 italic"
+                          [innerHTML]="section.quote | markdownHtml">
+                        </p>
+
+                        @if (section.author) {
+                          <footer class="mt-5 text-sm font-medium text-neutral-600">
+                            <div class="flex items-center gap-4">
+                              <svg class="size-12 text-neutral-300" fill="currentColor" xmlns="http://www.w3.org/2000/svg" id="mdi-account-circle"
+                                   viewBox="0 0 24 24">
+                                <path
+                                  d="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"/>
+                              </svg>
+                              <div class="flex flex-col gap-0.5">
+                                <p class="text-body2 italic">{{ section.author }}</p>
+                                @if (section.designation) {
+                                  <p class="text-body2">{{ section.designation }}</p>
+                                }
+                              </div>
+                            </div>
+                          </footer>
+                        }
+                      </blockquote>
                     </section>
                   }
                 }

@@ -1,4 +1,4 @@
-import {ArticleSectionType} from './article-section-type.enum';
+import { ArticleSectionType } from './article-section-type.enum';
 
 export interface ArticleSectionBase {
   id: string;
@@ -55,6 +55,13 @@ export interface NumberedListSection extends ArticleSectionBase {
   items: string[]; // markdown-enabled
 }
 
+export interface QuoteSection extends ArticleSectionBase {
+  type: ArticleSectionType.quote;
+  quote: string; // markdown-enabled
+  author?: string;
+  designation?: string;
+}
+
 export type ArticleSection =
   | HeadingParagraphSection
   | ParagraphSection
@@ -64,4 +71,5 @@ export type ArticleSection =
   | HeadingBulletedListSection
   | BulletedListSection
   | HeadingNumberedListSection
-  | NumberedListSection;
+  | NumberedListSection
+  | QuoteSection;
