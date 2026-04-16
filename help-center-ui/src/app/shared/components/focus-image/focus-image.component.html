@@ -1,0 +1,60 @@
+<div #imageContainer class="relative w-full overflow-hidden border rounded-2xl"
+     [style.aspect-ratio]="ratioString()">
+  <img [src]="imageSrc()"
+       alt="Image Preview"
+       class="absolute top-0 left-0 max-w-none select-none"
+       [style.width.px]="imgDrawWidth()!"
+       [style.height.px]="imgDrawHeight()!"
+       [style.transform]="transform()">
+</div>
+
+<!-- info section -->
+<!--<div class="mt-4 flex flex-col gap-2 text-sm text-neutral-700">-->
+
+<!--  &lt;!&ndash; Defined aspect ratio &ndash;&gt;-->
+<!--  <div>-->
+<!--    <span class="font-medium text-neutral-800">Defined Aspect Ratio:</span>-->
+<!--    {{ aspectRatio().width }} : {{ aspectRatio().height }}-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; 🆕 Defined crop &ndash;&gt;-->
+<!--  <div>-->
+<!--    <span class="font-medium text-neutral-800">Defined Crop:</span>-->
+<!--    x={{ crop().x }},-->
+<!--    y={{ crop().y }},-->
+<!--    w={{ crop().w }},-->
+<!--    h={{ crop().h }}-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; 🆕 Crop corner points &ndash;&gt;-->
+<!--  <div class="mt-1 grid grid-cols-2 sm:grid-cols-4 gap-2 text-neutral-600">-->
+<!--    <div>TL: ({{ topLeft().x }}, {{ topLeft().y }})</div>-->
+<!--    <div>TR: ({{ topRight().x }}, {{ topRight().y }})</div>-->
+<!--    <div>BL: ({{ bottomLeft().x }}, {{ bottomLeft().y }})</div>-->
+<!--    <div>BR: ({{ bottomRight().x }}, {{ bottomRight().y }})</div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Image details &ndash;&gt;-->
+<!--  @if (imageWidth() && imageHeight()) {-->
+<!--    <div>-->
+<!--      <span class="font-medium text-neutral-800">Image Resolution:</span>-->
+<!--      {{ imageWidth() }} × {{ imageHeight() }} px-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <span class="font-medium text-neutral-800">Image Aspect Ratio:</span>-->
+<!--      {{ imageAspectRatio() }}-->
+<!--    </div>-->
+<!--  } @else {-->
+<!--    <div class="text-neutral-500">Loading image details…</div>-->
+<!--  }-->
+
+<!--  &lt;!&ndash; Container size &ndash;&gt;-->
+<!--  @if (containerWidth() && containerHeight()) {-->
+<!--    <div>-->
+<!--      <span class="font-medium text-neutral-800">Container Size:</span>-->
+<!--      {{ containerWidth() }} × {{ containerHeight() }} px-->
+<!--    </div>-->
+<!--  } @else {-->
+<!--    <div class="text-neutral-500">Loading container size…</div>-->
+<!--  }-->
+<!--</div>-->

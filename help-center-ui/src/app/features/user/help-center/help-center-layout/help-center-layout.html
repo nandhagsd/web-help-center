@@ -1,0 +1,37 @@
+<div class="min-h-screen bg-slate-50 text-neutral-900">
+  <header class="sticky top-0 z-40 border-b border-neutral-200 bg-white/95 backdrop-blur">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 lg:px-8">
+
+      <div class="flex items-center gap-3">
+        <app-svg-icon [src]="Assets.images.brand.appIconSvg" [size]="36"></app-svg-icon>
+        <a
+          routerLink="/help"
+          class="text-body1 font-medium tracking-tight text-neutral-900">
+          Smart Dining
+        </a>
+      </div>
+
+      <nav class="flex items-center gap-2 text-sm font-medium">
+
+        <a
+          target="_blank"
+          href="https://app.smartdining.co"
+          class="rounded-full px-4 py-2 text-neutral-600 flex items-center gap-2 hover:underline transition-all duration-300"
+        >
+          Restaurant Dashboard
+          <app-svg-icon [src]="Assets.icons.openInNewSvg" [size]="16"></app-svg-icon>
+        </a>
+
+        <a
+          routerLink="/help"
+          class="rounded-full px-4 py-2 text-neutral-600 transition flex items-center gap-2">
+          Help Center
+          <app-svg-icon [src]="Assets.icons.lifebuoySvg" [size]="16"></app-svg-icon>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <router-outlet/>
+</div>
+

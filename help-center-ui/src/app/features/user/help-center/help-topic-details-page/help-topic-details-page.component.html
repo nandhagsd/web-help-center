@@ -1,0 +1,103 @@
+<section class="min-h-screen bg-white text-neutral-900">
+  <div class="mx-auto max-w-5xl px-6 py-14 lg:px-8 lg:py-20">
+    @if (topic) {
+      <div class="flex flex-col gap-10">
+        <nav class="flex items-center gap-2 text-sm text-neutral-500">
+          <a
+            routerLink="/help"
+            class="transition hover:text-primary-600"
+          >
+            Help Center
+          </a>
+          <span>/</span>
+          <span class="text-neutral-900">{{ topic.title }}</span>
+        </nav>
+
+
+        <header class="flex flex-col gap-5">
+          <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-50">
+            <app-svg-icon [src]="topic.icon" [size]="36" class="text-primary-500"></app-svg-icon>
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">
+              {{ topic.title }}
+            </h1>
+
+            <p class="max-w-3xl text-body1 leading-8 text-neutral-600">
+              {{ topic.description }}
+            </p>
+          </div>
+        </header>
+
+        <div class="h-px bg-neutral-200 my-4"></div>
+
+        <section class="rounded-3xl">
+          <div class="flex flex-col gap-4">
+            <h2 class="text-xl font-semibold text-neutral-900">
+              Articles in this topic
+            </h2>
+
+            @if (topicArticles.length) {
+              <div class="grid gap-4">
+                @for (article of topicArticles; track article.slug) {
+                  <a
+                    [routerLink]="['/help', topic.slug, article.slug]"
+                    class="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 transition hover:border-primary-200 hover:bg-primary-50 flex items-center duration-500">
+                    <div class="flex flex-col gap-2 justify-center grow">
+                      <h3 class="font-semibold text-neutral-900">
+                        {{ article.title }}
+                      </h3>
+
+                      <p class="mt-2 text-sm leading-6 text-neutral-600">
+                        {{ article.summary }}
+                      </p>
+                    </div>
+                    <app-svg-icon [src]="Assets.icons.arrowRightSvg" class="text-neutral-500"></app-svg-icon>
+                  </a>
+                }
+              </div>
+            } @else {
+              <p class="leading-7 text-neutral-600">
+                No articles have been published for this topic yet.
+              </p>
+            }
+          </div>
+        </section>
+
+        <div class="h-px bg-neutral-200 my-4"></div>
+
+        <section class="flex flex-col gap-5">
+          <h2 class="text-xl font-semibold">Related topics</h2>
+
+          <div class="grid gap-5 md:grid-cols-3">
+            @for (item of relatedTopics; track item.slug) {
+              <a
+                [routerLink]="['/help', item.slug]"
+                class="flex flex-col gap-3 rounded-2xl border border-neutral-200 p-5 transition hover:border-primary-200 hover:bg-primary-50"
+              >
+                <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-white">
+                  <img
+                    [src]="item.icon"
+                    [alt]="item.title"
+                    class="h-5 w-5"
+                  />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                  <h3 class="font-semibold text-neutral-900">
+                    {{ item.title }}
+                  </h3>
+
+                  <p class="text-sm leading-6 text-neutral-600">
+                    {{ item.description }}
+                  </p>
+                </div>
+              </a>
+            }
+          </div>
+        </section>
+      </div>
+    }
+  </div>
+</section>

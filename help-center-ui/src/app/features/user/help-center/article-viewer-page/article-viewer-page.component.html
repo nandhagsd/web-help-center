@@ -1,0 +1,204 @@
+<section class="min-h-screen bg-white text-neutral-900">
+  <div class="mx-auto max-w-6xl px-6 py-12 lg:px-8 lg:py-16">
+    @if (topic && article) {
+      <div class="flex flex-col gap-8 lg:grid lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-16">
+        <aside class="hidden lg:block">
+          <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto pr-2">
+            <div class="space-y-12">
+              @for (group of topicNavigation; track group.topic.slug) {
+                <section class="flex flex-col gap-2.5">
+                  <a
+                    [routerLink]="['/help', group.topic.slug]"
+                    class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-body1 font-medium transition hover:text-primary-600"
+                    [class.text-primary-700]="isActiveTopic(group.topic.slug)"
+                    [class.text-neutral-700]="!isActiveTopic(group.topic.slug)">
+                    <app-svg-icon
+                      [src]="group.topic.icon"
+                      [size]="16"
+                      [class.text-primary-600]="isActiveTopic(group.topic.slug)"
+                      [class.text-neutral-400]="!isActiveTopic(group.topic.slug)"
+                    ></app-svg-icon>
+                    {{ group.topic.title }}
+                  </a>
+
+                  <div class="flex flex-col gap-1">
+                    @for (item of group.articles; track item.slug) {
+                      <a
+                        [routerLink]="['/help', group.topic.slug, item.slug]"
+                        class="text-body2 rounded-lg border border-transparent px-3 py-2 text-sm transition hover:bg-neutral-100 hover:text-neutral-900"
+                        [class.bg-primary-50]="isActiveArticle(group.topic.slug, item.slug)"
+                        [class.border-primary-200]="isActiveArticle(group.topic.slug, item.slug)"
+                        [class.text-primary-700]="isActiveArticle(group.topic.slug, item.slug)"
+                        [class.text-neutral-600]="!isActiveArticle(group.topic.slug, item.slug)">
+                        {{ item.title }}
+                      </a>
+                    }
+                  </div>
+                </section>
+              }
+            </div>
+          </div>
+        </aside>
+
+        <main class="flex flex-col gap-8">
+          <div class="lg:hidden">
+            <h2 class="text-sm font-semibold text-neutral-900">Browse topics</h2>
+
+            <div class="mt-3 flex flex-col gap-2">
+              @for (group of topicNavigation; track group.topic.slug) {
+                <section class="rounded-xl border border-neutral-200">
+                  <button
+                    type="button"
+                    class="flex w-full items-center justify-between px-3 py-2 text-left text-sm font-medium"
+                    [class.text-primary-700]="isActiveTopic(group.topic.slug)"
+                    [class.text-neutral-700]="!isActiveTopic(group.topic.slug)"
+                    (click)="toggleTopicAccordion(group.topic.slug)"
+                  >
+                    <span class="flex items-center gap-2">
+                      <app-svg-icon
+                        [src]="group.topic.icon"
+                        [size]="15"
+                        [class.text-primary-600]="isActiveTopic(group.topic.slug)"
+                        [class.text-neutral-400]="!isActiveTopic(group.topic.slug)"
+                      ></app-svg-icon>
+                      {{ group.topic.title }}
+                    </span>
+                    <span class="text-xs">{{ isTopicExpanded(group.topic.slug) ? '−' : '+' }}</span>
+                  </button>
+
+                  @if (isTopicExpanded(group.topic.slug)) {
+                    <div class="flex flex-col gap-1 border-t border-neutral-200 px-2 py-2">
+                      @for (item of group.articles; track item.slug) {
+                        <a
+                          [routerLink]="['/help', group.topic.slug, item.slug]"
+                          class="rounded-lg border border-transparent px-2.5 py-2 text-sm transition hover:bg-neutral-100"
+                          [class.bg-primary-50]="isActiveArticle(group.topic.slug, item.slug)"
+                          [class.border-primary-200]="isActiveArticle(group.topic.slug, item.slug)"
+                          [class.text-primary-700]="isActiveArticle(group.topic.slug, item.slug)"
+                          [class.text-neutral-600]="!isActiveArticle(group.topic.slug, item.slug)"
+                        >
+                          {{ item.title }}
+                        </a>
+                      }
+                    </div>
+                  }
+                </section>
+              }
+            </div>
+          </div>
+
+          <nav class="flex flex-wrap items-center gap-2 text-sm text-neutral-500">
+            <a routerLink="/help" class="transition hover:text-primary-600">Help Center</a>
+            <span>/</span>
+            <a [routerLink]="['/help', topic.slug]" class="transition hover:text-primary-600">{{ topic.title }}</a>
+            <span>/</span>
+            <span class="text-neutral-900">{{ article.title }}</span>
+          </nav>
+
+          <header class="flex flex-col gap-3">
+            <span class="w-fit rounded-full bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700">
+              {{ topic.title }}
+            </span>
+
+            <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{{ article.title }}</h1>
+            <p class="text-lg leading-8 text-neutral-600">{{ article.summary }}</p>
+          </header>
+
+          <article class="">
+            <div class="text-base leading-8 text-neutral-700 [&_a]:text-primary-700 [&_a]:underline [&_a]:underline-offset-2">
+              @for (section of article.sections; track section.id) {
+                @switch (section.type) {
+                  @case (ArticleSectionType.HeadingParagraph) {
+                    <section class="mb-8">
+                      <h2 class="mb-3 text-2xl font-semibold leading-[1.35] text-neutral-900">{{ section.heading }}</h2>
+                      <div [innerHTML]="section.paragraph | markdownHtml"></div>
+                    </section>
+                  }
+
+                  @case (ArticleSectionType.Paragraph) {
+                    <section class="mb-6" [innerHTML]="section.paragraph | markdownHtml"></section>
+                  }
+
+                  @case (ArticleSectionType.Divider) {
+                    <section class="my-8 border-t border-neutral-200">
+                    </section>
+                  }
+
+                  @case (ArticleSectionType.Image) {
+                    <figure class="mb-8 overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50">
+                      <img [src]="section.imageUrl" [alt]="section.imageAlt" class="max-h-105 w-full object-contain" loading="lazy" />
+                      @if (section.caption) {
+                        <figcaption class="px-4 py-3 text-sm text-neutral-600" [innerHTML]="section.caption | markdownHtml"></figcaption>
+                      }
+                    </figure>
+                  }
+
+                  @case (ArticleSectionType.VideoEmbed) {
+                    <section class="mb-8">
+                      @if (section.heading) {
+                        <h3 class="mb-3 text-xl font-semibold leading-[1.35] text-neutral-900">{{ section.heading }}</h3>
+                      }
+                      <div class="overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50">
+                        <iframe
+                          class="h-90 w-full"
+                          [src]="toSafeYoutubeEmbedUrl(section.youtubeEmbedUrl)"
+                          title="Article video"
+                          loading="lazy"
+                          referrerpolicy="strict-origin-when-cross-origin"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen>
+                        </iframe>
+                      </div>
+                    </section>
+                  }
+
+                  @case (ArticleSectionType.HeadingBulletedList) {
+                    <section class="mb-8">
+                      <h3 class="mb-3 text-xl font-semibold leading-[1.35] text-neutral-900">{{ section.heading }}</h3>
+                      <ul class="list-disc space-y-2 pl-5">
+                        @for (item of section.items; track $index) {
+                          <li [innerHTML]="item | markdownHtml"></li>
+                        }
+                      </ul>
+                    </section>
+                  }
+
+                  @case (ArticleSectionType.BulletedList) {
+                    <section class="mb-8">
+                      <ul class="list-disc space-y-2 pl-5">
+                        @for (item of section.items; track $index) {
+                          <li [innerHTML]="item | markdownHtml"></li>
+                        }
+                      </ul>
+                    </section>
+                  }
+
+                  @case (ArticleSectionType.HeadingNumberedList) {
+                    <section class="mb-8">
+                      <h3 class="mb-3 text-xl font-semibold leading-[1.35] text-neutral-900">{{ section.heading }}</h3>
+                      <ol class="list-decimal space-y-2 pl-5">
+                        @for (item of section.items; track $index) {
+                          <li [innerHTML]="item | markdownHtml"></li>
+                        }
+                      </ol>
+                    </section>
+                  }
+
+                  @case (ArticleSectionType.NumberedList) {
+                    <section class="mb-8">
+                      <ol class="list-decimal space-y-2 pl-5">
+                        @for (item of section.items; track $index) {
+                          <li [innerHTML]="item | markdownHtml"></li>
+                        }
+                      </ol>
+                    </section>
+                  }
+                }
+              }
+            </div>
+          </article>
+        </main>
+      </div>
+    }
+  </div>
+</section>

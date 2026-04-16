@@ -1,0 +1,118 @@
+<div class="w-full h-full">
+  <!-- Single hidden file input (shared) -->
+  <input
+    #fileInput
+    type="file"
+    [accept]="accept()"
+    (change)="onFileInputChange($event)"
+    class="hidden"
+  />
+
+  <!-- Stage -->
+  <div
+    #stage
+    class="relative flex justify-center items-center w-full h-full min-h-[200px] rounded-lg border overflow-hidden"
+    [class.bg-gray-100]="displaySrc"
+    [class.bg-transparent]="!displaySrc">
+    @if (displaySrc) {
+      <!-- Action toolbar (top-right) -->
+      <div class="absolute right-2 top-2 z-20 flex gap-2">
+        <button
+          type="button"
+          class="absolute right-2 top-2 z-20 p-1.5 rounded-full bg-white/90 hover:bg-white border border-gray-200 shadow-sm text-red-600"
+          (click)="removeImage()"
+          aria-label="Remove image"
+          title="Remove image">
+          <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 24 24" class="w-5 h-5">
+            <path
+              d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19
+                       M8,9H16V19H8V9
+                       M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Displayed image -->
+      <div
+        class="absolute"
+        [style.left.px]="imgRect().x"
+        [style.top.px]="imgRect().y"
+        [style.width.px]="imgRect().w"
+        [style.height.px]="imgRect().h">
+        <img
+          #imgEl
+          class="absolute inset-0 w-full h-full object-contain select-none pointer-events-none"
+          [src]="displaySrc"
+          (load)="onImageLoad()"
+          alt="image"
+        />
+
+        <!-- Dim outside crop -->
+        <div
+          class="absolute z-0"
+          [style.left.px]="crop().x"
+          [style.top.px]="crop().y"
+          [style.width.px]="crop().w"
+          [style.height.px]="crop().h"
+          style="box-shadow: 0 0 0 9999px rgba(0,0,0,0.5); pointer-events:none;">
+        </div>
+
+        <!-- Crop box -->
+        <div
+          class="absolute z-10 border-2 border-indigo-400/80 rounded-md outline outline-2 outline-dashed outline-indigo-400/50 bg-transparent"
+          [class.cursor-grabbing]="dragging() && handle() === 'move'"
+          [class.cursor-grab]="!(dragging() && handle() === 'move')"
+          [style.left.px]="crop().x"
+          [style.top.px]="crop().y"
+          [style.width.px]="crop().w"
+          [style.height.px]="crop().h"
+          (pointerdown)="handleDown($event, 'move')"
+          style="touch-action:none; pointer-events:auto;"
+        >
+          <!-- Grid -->
+          <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute inset-x-0 top-1/3 border-t border-white/60"></div>
+            <div class="absolute inset-x-0 top-2/3 border-t border-white/60"></div>
+            <div class="absolute inset-y-0 left-1/3 border-l border-white/60"></div>
+            <div class="absolute inset-y-0 left-2/3 border-l border-white/60"></div>
+          </div>
+
+          <!-- Corner handles -->
+          <div class="handle -top-2 -left-2 cursor-nw-resize" (pointerdown)="handleDown($event,'nw')"></div>
+          <div class="handle -top-2 -right-2 cursor-ne-resize" (pointerdown)="handleDown($event,'ne')"></div>
+          <div class="handle -bottom-2 -left-2 cursor-sw-resize" (pointerdown)="handleDown($event,'sw')"></div>
+          <div class="handle -bottom-2 -right-2 cursor-se-resize" (pointerdown)="handleDown($event,'se')"></div>
+
+          <!-- Side handles (Free aspect only) -->
+          @if (aspect() === null) {
+            <div class="handle h-3 w-6 -top-2 left-1/2 -translate-x-1/2 cursor-n-resize"
+                 (pointerdown)="handleDown($event,'n')"></div>
+            <div class="handle h-6 w-3 top-1/2 -right-2 -translate-y-1/2 cursor-e-resize"
+                 (pointerdown)="handleDown($event,'e')"></div>
+            <div class="handle h-3 w-6 -bottom-2 left-1/2 -translate-x-1/2 cursor-s-resize"
+                 (pointerdown)="handleDown($event,'s')"></div>
+            <div class="handle h-6 w-3 top-1/2 -left-2 -translate-y-1/2 cursor-w-resize"
+                 (pointerdown)="handleDown($event,'w')"></div>
+          }
+        </div>
+      </div>
+    } @else {
+      <!-- Empty state: click anywhere to choose image -->
+      <button
+        type="button"
+        class="w-full h-full grid place-items-center text-center text-neutral-600 select-none"
+        (click)="openFileDialog()"
+      >
+        <div class="flex flex-col items-center justify-center gap-3 pointer-events-none">
+          <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 24 24" class="w-10 h-10 text-gray-400">
+            <path
+              d="M19,19H5V5H19M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M13.96,12.29L11.21,15.83L9.25,13.47L6.5,17H17.5L13.96,12.29Z"/>
+          </svg>
+          <p class="text-sm text-gray-600">Click to choose picture</p>
+        </div>
+      </button>
+    }
+  </div>
+</div>

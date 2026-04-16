@@ -1,0 +1,17 @@
+{
+  "name": "web-help-centerr",
+  "private": true,
+  "scripts": {
+    "api": "npm run start:dev --prefix help-center-api",
+    "ui": "npm start --prefix help-center-ui",
+    "dev": "concurrently \"npm run api\" \"npm run ui\"",
+    "install:all": "npm install --prefix help-center-api && npm install --prefix help-center-ui",
+    "build": "npm run build --prefix help-center-api && npm run build --prefix help-center-ui"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7"
+  }
+}
