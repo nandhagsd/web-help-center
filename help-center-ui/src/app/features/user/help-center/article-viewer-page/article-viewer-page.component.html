@@ -230,6 +230,30 @@
               }
             </div>
           </article>
+
+          <nav class="flex items-center justify-between gap-4 border-t border-neutral-200 pt-6">
+            <div>
+              @if (previousArticleRef) {
+                <a
+                  [routerLink]="['/help', previousArticleRef.topicSlug, previousArticleRef.articleSlug]"
+                  class="inline-flex rounded-xl border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-primary-200 hover:bg-primary-50 hover:text-primary-700"
+                >
+                  {{ '← Previous: ' + previousArticleRef.title }}
+                </a>
+              }
+            </div>
+
+            <div class="ml-auto">
+              @if (nextArticleRef) {
+                <a
+                  [routerLink]="['/help', nextArticleRef.topicSlug, nextArticleRef.articleSlug]"
+                  class="inline-flex rounded-xl border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-primary-200 hover:bg-primary-50 hover:text-primary-700"
+                >
+                  {{ 'Next: ' + nextArticleRef.title }}
+                </a>
+              }
+            </div>
+          </nav>
         </main>
       </div>
     }

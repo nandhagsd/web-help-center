@@ -15,6 +15,12 @@ import {HelpArticle} from '@core/data/help-articles/help-articles.model';
 import {ArticleSectionType} from '@core/models/articles/article-section-type.enum';
 import {MarkdownHtmlPipe} from '@shared/pipes/markdown-html.pipe';
 
+type ArticleRouteRef = {
+  topicSlug: string;
+  articleSlug: string;
+  title: string;
+};
+
 
 @Component({
   selector: 'app-article-page',
@@ -39,8 +45,18 @@ export class ArticleViewerPage implements OnInit {
     articles: getHelpArticlesForTopicSlug(topic.slug),
   }));
 
+  readonly orderedArticleRefs: ArticleRouteRef[] = this.topicNavigation.flatMap((group) =>
+    group.articles.map((article) => ({
+      topicSlug: group.topic.slug,
+      articleSlug: article.slug,
+      title: article.title,
+    })),
+  );
+
   topic?: HelpTopic;
   article?: HelpArticle;
+  previousArticleRef?: ArticleRouteRef;
+  nextArticleRef?: ArticleRouteRef;
 
   // Multiple groups can stay open on mobile so users can compare sections quickly.
   expandedTopicSlugs = new Set<string>();
@@ -95,6 +111,8 @@ export class ArticleViewerPage implements OnInit {
     this.topic = topic;
     this.article = article;
     this.expandedTopicSlugs.add(topic.slug);
+    this.resolveAdjacentArticles(topic.slug, article.slug);
+    this.scrollToTop();
 
     const seo = resolveHelpArticleSeo(topic, article);
 
@@ -106,5 +124,36 @@ export class ArticleViewerPage implements OnInit {
       url: `https://www.smartdining.co/help/${topic.slug}/${article.slug}`,
       imageUrl: 'https://www.smartdining.co/assets/images/seo/help-center-cover.webp',
     });
+  }
+
+  private resolveAdjacentArticles(topicSlug: string, articleSlug: string): void {
+    const currentIndex = this.orderedArticleRefs.findIndex(
+      (item) => item.topicSlug === topicSlug && item.articleSlug === articleSlug,
+    );
+
+    if (currentIndex < 0) {
+      this.previousArticleRef = undefined;
+      this.nextArticleRef = undefined;
+      return;
+    }
+
+    this.previousArticleRef = this.orderedArticleRefs[currentIndex - 1];
+    this.nextArticleRef = this.orderedArticleRefs[currentIndex + 1];
+  }
+
+  private scrollToTop(): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      try {
+        window.scrollTo(0, 0);
+      } catch {
+        // Ignore scroll errors in non-browser test environments.
+      }
+    }
   }
 }
