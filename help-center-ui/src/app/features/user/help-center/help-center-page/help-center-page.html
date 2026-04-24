@@ -1,4 +1,5 @@
-<section class="relative min-h-screen bg-slate-50 text-neutral-900">
+<section class="relative h-dvh bg-slate-50 text-neutral-900">
+
   <div class="pointer-events-none absolute inset-x-0 top-0 h-136 overflow-hidden">
     <div class="absolute inset-0 bg-linear-to-b from-primary-50/70 via-white/40 to-transparent"></div>
     <div class="absolute -left-24 -top-28 h-80 w-80 rounded-full bg-primary-200/30 blur-3xl"></div>
@@ -7,72 +8,76 @@
   </div>
 
   <div class="relative z-10 mx-auto max-w-6xl px-6 py-16 lg:px-8 lg:py-20">
-    <div class="mx-auto max-w-3xl text-center">
-      <h1 class="text-h3 font-bold tracking-tight sm:text-h5">
-        Smart Dining Help Center
-      </h1>
 
-      <p class="mx-auto mt-5 max-w-2xl text-body1 leading-8 text-neutral-500">
-        Find answers to manage reservations, guests, restaurant operations, and integrations with ease.
-      </p>
-    </div>
+    <div class="flex flex-col w-full">
+      <div class="mx-auto max-w-3xl text-center w-full">
+        <h1 class="text-h3 font-bold tracking-tight sm:text-h5">
+          Smart Dining Help Center
+        </h1>
 
-    <div class="mx-auto mt-10 max-w-4xl">
-      <div
-        class="relative flex items-center gap-4 rounded-2xl border border-neutral-200 bg-white px-5 py-5 shadow-sm transition-all duration-200 hover:shadow-md focus-within:border-primary-300 focus-within:shadow-lg focus-within:ring-3 focus-within:ring-primary-100">
+        <p class="mx-auto mt-5 max-w-2xl text-body1 leading-8 text-neutral-500">
+          Find answers to manage reservations, guests, restaurant operations, and integrations with ease.
+        </p>
+      </div>
 
-        <app-svg-icon [src]="Assets.icons.searchSvg" class="text-neutral-500" [size]="24"></app-svg-icon>
+      <div class="mx-auto mt-10 max-w-4xl w-full">
+        <div
+          class="relative flex items-center gap-4 rounded-2xl border border-neutral-200 bg-white px-5 py-5 shadow-sm transition-all duration-200 hover:shadow-md focus-within:border-primary-300 focus-within:shadow-lg focus-within:ring-3 focus-within:ring-primary-100">
+
+          <app-svg-icon [src]="Assets.icons.searchSvg" class="text-neutral-500" [size]="24"></app-svg-icon>
 
 
-        <input
-          type="text"
-          [value]="searchQuery"
-          [placeholder]="searchPlaceholder"
-          autocomplete="off"
-          (input)="onSearchInput($any($event.target).value)"
-          (focus)="onSearchFocus()"
-          (blur)="onSearchBlur()"
-          (keydown)="onSearchKeydown($event)"
-          class="w-full bg-transparent text-base outline-none placeholder:text-neutral-400"
-        />
+          <input
+            type="text"
+            [value]="searchQuery"
+            [placeholder]="searchPlaceholder"
+            autocomplete="off"
+            (input)="onSearchInput($any($event.target).value)"
+            (focus)="onSearchFocus()"
+            (blur)="onSearchBlur()"
+            (keydown)="onSearchKeydown($event)"
+            class="w-full bg-transparent text-base outline-none placeholder:text-neutral-400"
+          />
 
-        @if (suggestions.length) {
-          <div class="absolute left-0 right-0 top-[calc(100%+0.75rem)] z-20 rounded-2xl border border-neutral-200 bg-white py-2 px-2 shadow-lg">
-            @for (suggestion of suggestions; track suggestion.id; let i = $index) {
-              <button
-                type="button"
-                (mousedown)="selectSuggestion(suggestion)"
-                [class.bg-neutral-100]="i === activeSuggestionIndex"
-                class="flex w-full cursor-pointer flex-col gap-2 rounded-xl px-3 py-4 my-1 text-left transition hover:bg-neutral-100">
+          @if (suggestions.length) {
+            <div class="absolute left-0 right-0 top-[calc(100%+0.75rem)] z-20 rounded-2xl border border-neutral-200 bg-white py-2 px-2 shadow-lg">
+              @for (suggestion of suggestions; track suggestion.id; let i = $index) {
+                <button
+                  type="button"
+                  (mousedown)="selectSuggestion(suggestion)"
+                  [class.bg-neutral-100]="i === activeSuggestionIndex"
+                  class="flex w-full cursor-pointer flex-col gap-2 rounded-xl px-3 py-4 my-1 text-left transition hover:bg-neutral-100">
 
-                <div class="flex items-center gap-4">
-                  <span class="text-sm font-semibold text-neutral-900 grow">{{ suggestion.articleTitle }}</span>
-                  <span class="text-xs text-primary-400">{{ suggestion.topicTitle }}</span>
-                </div>
-                <span class="text-xs text-neutral-600 truncate">{{ suggestion.matchPreview }}</span>
-              </button>
-            }
-          </div>
-        } @else if (hasSearchQuery()) {
-          <div class="absolute left-0 right-0 top-[calc(100%+0.75rem)] z-20 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-500 shadow-lg">
-            No matching articles found.
-          </div>
+                  <div class="flex items-center gap-4">
+                    <span class="text-sm font-semibold text-neutral-900 grow">{{ suggestion.articleTitle }}</span>
+                    <span class="text-xs text-primary-400">{{ suggestion.topicTitle }}</span>
+                  </div>
+                  <span class="text-xs text-neutral-600 truncate">{{ suggestion.matchPreview }}</span>
+                </button>
+              }
+            </div>
+          } @else if (hasSearchQuery()) {
+            <div class="absolute left-0 right-0 top-[calc(100%+0.75rem)] z-20 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-500 shadow-lg">
+              No matching articles found.
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm w-full">
+        <span class="text-neutral-500">Popular topics:</span>
+
+        @for (topic of popularTopics; track topic.slug) {
+          <button
+            type="button"
+            (click)="navigateTo(topic.slug)"
+            class="rounded-full bg-neutral-200 px-5 py-2.5 font-medium text-neutral-600 transition hover:bg-primary-100 hover:text-primary-700 cursor-pointer">
+            {{ topic.label }}
+          </button>
         }
       </div>
     </div>
 
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm">
-      <span class="text-neutral-500">Popular topics:</span>
-
-      @for (topic of popularTopics; track topic.slug) {
-        <button
-          type="button"
-          (click)="navigateTo(topic.slug)"
-          class="rounded-full bg-neutral-200 px-5 py-2.5 font-medium text-neutral-600 transition hover:bg-primary-100 hover:text-primary-700 cursor-pointer">
-          {{ topic.label }}
-        </button>
-      }
-    </div>
 
     <div class="mt-16 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
       @for (item of topicCards; track item.slug) {
