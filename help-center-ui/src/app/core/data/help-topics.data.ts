@@ -17,13 +17,24 @@ export const HELP_TOPICS: HelpTopic[] = [
     icon: Assets.icons.rocketOutlineSvg,
     title: 'Getting Started',
     description:
-      'Set up your restaurant, configure floors, tables, and start managing reservations smoothly.',
-    slug: 'getting-started',
-    seoTitle: 'Getting Started | Smart Dining Help Center',
+      'Set up your account, restaurant, configure floors, tables, menus and start managing reservations smoothly.',
+    slug: 'restaurant-set-up',
+    seoTitle: 'Restaurant Account Set Up | Smart Dining Help Center',
     seoDescription:
-      'Learn how to set up Smart Dining, configure restaurant basics, and begin managing reservations efficiently.',
+      'Learn how to set up Smart Dining account, configure restaurant basics, and begin managing reservations efficiently.',
     keywords: ['smart dining', 'getting started', 'restaurant setup', 'reservations'],
   },
+  // {
+  //   icon: Assets.icons.rocketOutlineSvg,
+  //   title: 'Getting Started',
+  //   description:
+  //     'Set up your restaurant, configure floors, tables, and start managing reservations smoothly.',
+  //   slug: 'getting-started',
+  //   seoTitle: 'Getting Started | Smart Dining Help Center',
+  //   seoDescription:
+  //     'Learn how to set up Smart Dining, configure restaurant basics, and begin managing reservations efficiently.',
+  //   keywords: ['smart dining', 'getting started', 'restaurant setup', 'reservations'],
+  // },
   {
     icon: Assets.icons.cogOutlineSvg,
     title: 'Restaurant Settings',

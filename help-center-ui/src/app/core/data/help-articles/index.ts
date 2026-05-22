@@ -5,8 +5,10 @@ import {INTEGRATIONS_ARTICLES} from './integrations.articles.data';
 import {PRIVACY_ACCESS_ARTICLES} from './privacy-access.articles.data';
 import {RESTAURANT_SETTINGS_ARTICLES} from './restaurant-settings.articles.data';
 import {TROUBLESHOOTING_ARTICLES} from './troubleshooting.articles.data';
+import { RESTAURANT_SET_UP } from '@core/data/help-articles/restaurant-set-up.data';
 
 const HELP_ARTICLES_BY_TOPIC_SLUG: Record<string, HelpArticle[]> = {
+  'restaurant-set-up' : RESTAURANT_SET_UP,
   'getting-started': GETTING_STARTED_ARTICLES,
   'restaurant-settings': RESTAURANT_SETTINGS_ARTICLES,
   'troubleshooting': TROUBLESHOOTING_ARTICLES,

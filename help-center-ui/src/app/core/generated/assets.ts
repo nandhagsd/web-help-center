@@ -13,14 +13,24 @@ export const Assets = {
     openInNewSvg: 'assets/icons/open-in-new.svg',
     rocketOutlineSvg: 'assets/icons/rocket-outline.svg',
     searchSvg: 'assets/icons/search.svg',
-    shieldOutlineSvg: 'assets/icons/shield-outline.svg'
+    shieldOutlineSvg: 'assets/icons/shield-outline.svg',
   },
   images: {
     brand: {
-      appIconSvg: 'assets/images/brand/app-icon.svg'
+      appIconSvg: 'assets/images/brand/app-icon.svg',
     },
-    dashboardScreenshotPng: 'assets/images/dashboard-screenshot.png'
-  }
+    dashboardScreenshotPng: 'assets/images/dashboard-screenshot.png',
+
+    homeScreenshotPng: 'assets/images/home-screenshot.png',
+    pricingScreenshotPng: 'assets/images/pricing-screenshot.png',
+    signUpBasicDetailsScreenshotPng: 'assets/images/sign-up-basic-details-screenshot.png',
+    signUpRestaurantLocationScreenshotPng: 'assets/images/sign-up-restaurant-location-screenshot.png',
+    signUpOwnerDetailsScreenshotPng: 'assets/images/sign-up-owner-details-screenshot.png',
+
+    floorLayoutScreenshotPng: 'assets/images/floor-layout-screenshot.png',
+    createFloorScreenshotPng: 'assets/images/create-floor-screenshot.png',
+    createTableScreenshotPng: 'assets/images/create-table-screenshot.png',
+  },
 } as const;
 
 export type AssetsType = typeof Assets;
