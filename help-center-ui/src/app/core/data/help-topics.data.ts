@@ -24,6 +24,44 @@ export const HELP_TOPICS: HelpTopic[] = [
       'Learn how to set up Smart Dining account, configure restaurant basics, and begin managing reservations efficiently.',
     keywords: ['smart dining', 'getting started', 'restaurant setup', 'reservations'],
   },
+  {
+    icon: Assets.icons.menuIconSvg,
+    title: 'Menu Settings',
+    description:
+      'Learn how to create and manage menus, categories, food items, and modifier groups for your restaurant using Smart Dining.',
+    slug: 'menu-settings',
+    seoTitle: 'Restaurant Menu Settings | Smart Dining Help Center',
+    seoDescription:
+      'Learn how to configure restaurant menus, menu categories, food items, pricing, and modifier groups in Smart Dining.',
+    keywords: [
+      'menu settings',
+      'restaurant menus',
+      'food items',
+      'modifier groups',
+      'menu categories',
+      'smart dining menu management',
+    ],
+  },
+  {
+    icon: Assets.icons.tableIconSvg,
+    title: 'Floor & Table Settings',
+    description:
+      'Learn how to create and manage restaurant floors, tables, seating layouts, and dining sections using Smart Dining.',
+    slug: 'floor-table-settings',
+    seoTitle: 'Restaurant Floor & Table Settings | Smart Dining Help Center',
+    seoDescription:
+      'Learn how to configure restaurant floor layouts, create tables, manage seating capacity, and organize dining sections in Smart Dining.',
+    keywords: [
+      'floor settings',
+      'table settings',
+      'restaurant floors',
+      'restaurant tables',
+      'floor layouts',
+      'table management',
+      'restaurant seating',
+      'smart dining floor management',
+    ],
+  },
   // {
   //   icon: Assets.icons.rocketOutlineSvg,
   //   title: 'Getting Started',
